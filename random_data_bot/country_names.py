@@ -418,6 +418,14 @@ ADDRESS_DETAILS_BY_COUNTRY = {
         {"state": "Queensland", "city": "Gold Coast", "postal_code": "4217"},
         {"state": "New South Wales", "city": "Newcastle", "postal_code": "2300"},
     ],
+    "AR": [
+        {"state": "Ciudad Autónoma de Buenos Aires", "city": "Buenos Aires", "postal_code": "C1001"},
+        {"state": "Córdoba", "city": "Córdoba", "postal_code": "X5000"},
+        {"state": "Santa Fe", "city": "Rosario", "postal_code": "S2000"},
+        {"state": "Mendoza", "city": "Mendoza", "postal_code": "M5500"},
+        {"state": "Buenos Aires", "city": "La Plata", "postal_code": "B1900"},
+        {"state": "Buenos Aires", "city": "Mar del Plata", "postal_code": "B7600"},
+    ],
     "BR": [
         {"state": "São Paulo", "city": "São Paulo", "postal_code": "01000-000"},
         {"state": "Rio de Janeiro", "city": "Rio de Janeiro", "postal_code": "20000-000"},
@@ -599,6 +607,34 @@ ADDRESS_DETAILS_BY_COUNTRY = {
 }
 
 STREET_NAMES_BY_COUNTRY_AND_CITY = {
+    "AE": {
+        "Dubai": ["Sheikh Zayed Road", "Al Wasl Road", "Jumeirah Beach Road"],
+        "Abu Dhabi": ["Corniche Road", "Sheikh Rashid Bin Saeed Street", "Hamdan Bin Mohammed Street"],
+        "Sharjah": ["Al Wahda Street", "King Faisal Street", "Corniche Street"],
+        "Ajman": ["Sheikh Khalifa Bin Zayed Street", "Sheikh Rashid Bin Humaid Street", "Corniche Road"],
+        "Ras Al Khaimah": ["Al Muntasir Road", "Sheikh Mohammed Bin Salem Road", "Corniche Road"],
+        "Fujairah": ["Hamad Bin Abdulla Road", "Sheikh Hamad Bin Abdullah Street", "Corniche Street"],
+    },
+    "AU": {
+        "Sydney": ["George Street", "Pitt Street", "Oxford Street"],
+        "Melbourne": ["Collins Street", "Swanston Street", "Bourke Street"],
+        "Brisbane": ["Queen Street", "Adelaide Street", "Ann Street"],
+        "Perth": ["St Georges Terrace", "Hay Street", "Murray Street"],
+        "Adelaide": ["King William Street", "Rundle Street", "North Terrace"],
+        "Hobart": ["Elizabeth Street", "Davey Street", "Macquarie Street"],
+        "Darwin": ["Mitchell Street", "Smith Street", "Knuckey Street"],
+        "Canberra": ["Northbourne Avenue", "London Circuit", "Constitution Avenue"],
+        "Gold Coast": ["Cavill Avenue", "Gold Coast Highway", "Surfers Paradise Boulevard"],
+        "Newcastle": ["Hunter Street", "King Street", "Darby Street"],
+    },
+    "AR": {
+        "Buenos Aires": ["Avenida 9 de Julio", "Avenida Corrientes", "Avenida Santa Fe"],
+        "Córdoba": ["Avenida Colón", "Avenida General Paz", "Bulevar Chacabuco"],
+        "Rosario": ["Bulevar Oroño", "Calle Córdoba", "Avenida Pellegrini"],
+        "Mendoza": ["Avenida San Martín", "Avenida Las Heras", "Avenida Arístides Villanueva"],
+        "La Plata": ["Avenida 7", "Calle 12", "Avenida 13"],
+        "Mar del Plata": ["Avenida Luro", "Avenida Colón", "Avenida Independencia"],
+    },
     "BR": {
         "São Paulo": ["Avenida Paulista", "Rua Augusta", "Rua Oscar Freire"],
         "Rio de Janeiro": ["Avenida Atlântica", "Rua Visconde de Pirajá", "Avenida Rio Branco"],
@@ -623,6 +659,18 @@ STREET_NAMES_BY_COUNTRY_AND_CITY = {
         "Halifax": ["Barrington Street", "Spring Garden Road", "Argyle Street"],
         "Victoria": ["Government Street", "Douglas Street", "Fort Street"],
     },
+    "CN": {
+        "Beijing": ["Chang'an Avenue", "Wangfujing Street", "Jianguomen Outer Street"],
+        "Shanghai": ["Nanjing Road", "Huaihai Road", "Zhongshan Road"],
+        "Guangzhou": ["Zhongshan Road", "Beijing Road", "Tianhe Road"],
+        "Shenzhen": ["Shennan Avenue", "Huaqiang North Road", "Binhe Avenue"],
+        "Chengdu": ["Renmin South Road", "Chunxi Road", "Shudu Avenue"],
+        "Hangzhou": ["Yan'an Road", "Tiyuchang Road", "Qingchun Road"],
+        "Nanjing": ["Zhongshan Road", "Hanzhong Road", "Beijing East Road"],
+        "Wuhan": ["Jiefang Avenue", "Zhongshan Avenue", "Jianghan Road"],
+        "Xi'an": ["Chang'an Road", "Jiefang Road", "East Street"],
+        "Tianjin": ["Nanjing Road", "Heping Road", "Jiefang North Road"],
+    },
     "DE": {
         "Berlin": ["Unter den Linden", "Friedrichstraße", "Kurfürstendamm"],
         "Munich": ["Leopoldstraße", "Maximilianstraße", "Sonnenstraße"],
@@ -646,6 +694,58 @@ STREET_NAMES_BY_COUNTRY_AND_CITY = {
         "Bordeaux": ["Rue Sainte-Catherine", "Cours de l'Intendance", "Quai des Chartrons"],
         "Montpellier": ["Rue de la Loge", "Boulevard du Jeu de Paume", "Avenue de Toulouse"],
         "Lille": ["Rue Nationale", "Rue Faidherbe", "Boulevard de la Liberté"],
+    },
+    "GB": {
+        "London": ["Oxford Street", "Regent Street", "Baker Street"],
+        "Manchester": ["Deansgate", "Market Street", "Oxford Road"],
+        "Birmingham": ["New Street", "Corporation Street", "Broad Street"],
+        "Edinburgh": ["Princes Street", "George Street", "Royal Mile"],
+        "Glasgow": ["Buchanan Street", "Sauchiehall Street", "Argyle Street"],
+        "Cardiff": ["Queen Street", "St Mary Street", "Castle Street"],
+        "Belfast": ["Royal Avenue", "Donegall Place", "Great Victoria Street"],
+        "Liverpool": ["Bold Street", "Dale Street", "Castle Street"],
+        "Leeds": ["Briggate", "The Headrow", "Boar Lane"],
+        "Bristol": ["Park Street", "Corn Street", "Broadmead"],
+    },
+    "IN": {
+        "Mumbai": ["Marine Drive", "Mahatma Gandhi Road", "Linking Road"],
+        "New Delhi": ["Janpath", "Rajpath", "Connaught Place"],
+        "Bengaluru": ["Mahatma Gandhi Road", "Brigade Road", "Residency Road"],
+        "Chennai": ["Anna Salai", "Mount Road", "Radhakrishnan Salai"],
+        "Kolkata": ["Park Street", "Chowringhee Road", "Camac Street"],
+        "Hyderabad": ["Banjara Hills Road", "Tank Bund Road", "Abids Road"],
+        "Pune": ["Fergusson College Road", "Jangli Maharaj Road", "Laxmi Road"],
+        "Ahmedabad": ["Ashram Road", "C. G. Road", "S. G. Highway"],
+        "Jaipur": ["M. I. Road", "Johari Bazaar Road", "Tonk Road"],
+        "Lucknow": ["Hazratganj Road", "Vidhan Sabha Marg", "Mahatma Gandhi Marg"],
+    },
+    "LK": {
+        "Colombo": ["Galle Road", "R. A. De Mel Mawatha", "Bauddhaloka Mawatha"],
+        "Gampaha": ["Colombo Road", "Ja Ela Road", "Yakkala Road"],
+        "Kalutara": ["Galle Road", "Main Street", "Panadura Road"],
+        "Negombo": ["Colombo Road", "Sea Street", "Lewis Place"],
+        "Kandy": ["Dalada Veediya", "Peradeniya Road", "D. S. Senanayake Veediya"],
+        "Matale": ["Kandy Road", "Main Street", "Trincomalee Street"],
+        "Nuwara Eliya": ["Queen Elizabeth Drive", "Badulla Road", "Park Road"],
+        "Galle": ["Wakwella Road", "Colombo Road", "Lighthouse Street"],
+        "Matara": ["Anagarika Dharmapala Mawatha", "Beach Road", "Main Street"],
+        "Hambantota": ["Tissa Road", "Main Street", "New Road"],
+        "Jaffna": ["Hospital Road", "Kandy Road", "Stanley Road"],
+        "Vavuniya": ["Kandy Road", "Station Road", "Horowpathana Road"],
+        "Mannar": ["Main Street", "Talaimannar Road", "Hospital Road"],
+        "Trincomalee": ["Dockyard Road", "Kandy Road", "Main Street"],
+        "Batticaloa": ["Trinco Road", "Bar Road", "Central Road"],
+        "Ampara": ["D. S. Senanayake Street", "Main Street", "Kandy Road"],
+        "Kurunegala": ["Dambulla Road", "Colombo Road", "Negombo Road"],
+        "Puttalam": ["Mannar Road", "Kurunegala Road", "Main Street"],
+        "Chilaw": ["Colombo Road", "Puttalam Road", "Sea Street"],
+        "Anuradhapura": ["Maithripala Senanayake Mawatha", "Harischandra Mawatha", "Stage 1 Road"],
+        "Polonnaruwa": ["New Town Road", "Batticaloa Road", "Hospital Road"],
+        "Badulla": ["Lower Street", "Bandarawela Road", "Passara Road"],
+        "Bandarawela": ["Badulla Road", "Welimada Road", "Main Street"],
+        "Monaragala": ["Wellawaya Road", "Pottuvil Road", "Main Street"],
+        "Ratnapura": ["Main Street", "Colombo Road", "Bandaranaike Mawatha"],
+        "Kegalle": ["Colombo Road", "Kandy Road", "Bulathkohupitiya Road"],
     },
     "JP": {
         "Tokyo": ["Marunouchi", "Ginza", "Shinjuku-dori"],
@@ -686,6 +786,9 @@ STREET_NAMES_BY_COUNTRY_AND_CITY = {
         "San Diego": ["Broadway", "University Avenue", "India Street"],
         "Dallas": ["Elm Street", "Main Street", "McKinney Avenue"],
         "Seattle": ["Pine Street", "First Avenue", "Yesler Way"],
+    },
+    "SG": {
+        "Singapore": ["Orchard Road", "Shenton Way", "North Bridge Road"],
     },
     "VN": {
         "Hà Nội": ["Phố Huế", "Hàng Bài", "Tràng Tiền"],
@@ -747,6 +850,7 @@ class FakeAddress:
     country: ResolvedCountry
     neighborhood: str | None = None
     ssn: str | None = None
+    uses_curated_street_name: bool = False
 
 
 @dataclass(frozen=True)
@@ -881,6 +985,9 @@ def generate_invalid_check_digits(valid_check_digits: str, fake: Faker) -> str:
 def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
     fake = Faker(country.locale)
     city_details = fake.random_element(ADDRESS_DETAILS_BY_COUNTRY[country.code])
+    has_curated_street_name = (
+        city_details["city"] in STREET_NAMES_BY_COUNTRY_AND_CITY.get(country.code, {})
+    )
 
     return FakeAddress(
         name=generate_name(country.code)[0],
@@ -892,6 +999,7 @@ def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
         country=country,
         neighborhood=city_details.get("neighborhood"),
         ssn=generate_fake_ssn(fake) if country.code == "US" else None,
+        uses_curated_street_name=has_curated_street_name,
     )
 
 
@@ -929,28 +1037,22 @@ def generate_curated_street(
 
 def generate_sri_lankan_address(country: ResolvedCountry) -> FakeAddress:
     fake = Faker()
-    streets = [
-        "Galle Road",
-        "R. A. De Mel Mawatha",
-        "Bauddhaloka Mawatha",
-        "Temple Road",
-        "Lake Road",
-        "Main Street",
-        "Kandy Road",
-        "Flower Road",
-    ]
-
     city_details = fake.random_element(SRI_LANKAN_CITY_DETAILS)
-    street = f"{fake.random_int(min=1, max=200)} {fake.random_element(streets)}"
+    street_details = {
+        "city": city_details["city"],
+        "state": city_details["province"],
+        "postal_code": city_details["postal_code"],
+    }
 
     return FakeAddress(
         name=generate_sri_lankan_name(),
-        street=street,
+        street=generate_curated_street(country.code, street_details, fake),
         city=city_details["city"],
         state=city_details["province"],
         postal_code=city_details["postal_code"],
         phone=generate_sri_lankan_phone(),
         country=country,
+        uses_curated_street_name=True,
     )
 
 
@@ -1054,6 +1156,8 @@ def format_fake_address(fake_address: FakeAddress) -> str:
     fallback_note = ""
     if country.uses_fallback:
         fallback_note = "\n\nNote: Exact local address style is unavailable, so this uses a global style."
+    elif fake_address.uses_curated_street_name:
+        fallback_note = "\n\nNote: Street name is curated; house number is random and not delivery-verified."
 
     neighborhood_line = ""
     if fake_address.neighborhood:

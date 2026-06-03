@@ -89,11 +89,13 @@ fr = France
 ```
 
 For countries with curated data, city/state/postal-code combinations are kept together.
+Street names come from city-specific curated lists, while house/building numbers are
+random and are not delivery-verified.
 
 Currently curated address data includes:
 
 ```text
-lk, mx, us, gb, de, fr
+ae, ar, au, br, ca, cn, de, fr, gb, in, jp, lk, mt, mx, sg, us, vn
 ```
 
 Other valid countries still work, but they may use a random fallback address style when exact local address data is unavailable.

@@ -62,6 +62,7 @@ class CountryNameTests(unittest.TestCase):
         self.assertIn("- Street:", formatted)
         self.assertIn("- Postal Code:", formatted)
         self.assertIn("- Phone:", formatted)
+        self.assertIn("house number is random", formatted)
 
     def test_sri_lankan_city_matches_postal_code(self):
         postal_code_by_city = {
@@ -75,6 +76,7 @@ class CountryNameTests(unittest.TestCase):
     def test_curated_country_city_matches_postal_code(self):
         curated_country_codes = (
             "ae",
+            "ar",
             "au",
             "br",
             "ca",
@@ -104,8 +106,26 @@ class CountryNameTests(unittest.TestCase):
                     valid_details,
                 )
 
-    def test_priority_countries_use_city_specific_streets(self):
-        curated_country_codes = ("br", "ca", "de", "fr", "jp", "mt", "mx", "us", "vn")
+    def test_curated_countries_use_city_specific_streets(self):
+        curated_country_codes = (
+            "ae",
+            "ar",
+            "au",
+            "br",
+            "ca",
+            "cn",
+            "de",
+            "fr",
+            "gb",
+            "in",
+            "jp",
+            "lk",
+            "mt",
+            "mx",
+            "sg",
+            "us",
+            "vn",
+        )
 
         for country_code in curated_country_codes:
             street_names_by_city = STREET_NAMES_BY_COUNTRY_AND_CITY[
