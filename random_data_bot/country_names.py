@@ -580,6 +580,121 @@ ADDRESS_DETAILS_BY_COUNTRY = {
             "postal_code": "77500",
         },
     ],
+    "VN": [
+        {"state": "Hà Nội", "city": "Hà Nội", "postal_code": "100000"},
+        {"state": "Hồ Chí Minh", "city": "Ho Chi Minh City", "postal_code": "700000"},
+        {"state": "Đà Nẵng", "city": "Da Nang", "postal_code": "550000"},
+        {"state": "Hải Phòng", "city": "Hai Phong", "postal_code": "180000"},
+        {"state": "Cần Thơ", "city": "Can Tho", "postal_code": "900000"},
+        {"state": "Thừa Thiên Huế", "city": "Hue", "postal_code": "530000"},
+    ],
+    "MT": [
+        {"state": "South Eastern Region", "city": "Valletta", "postal_code": "VLT 1111"},
+        {"state": "Northern Harbour Region", "city": "Sliema", "postal_code": "SLM 1010"},
+        {"state": "Northern Harbour Region", "city": "St Julian's", "postal_code": "STJ 1010"},
+        {"state": "Northern Region", "city": "Mosta", "postal_code": "MST 9010"},
+        {"state": "Northern Harbour Region", "city": "Birkirkara", "postal_code": "BKR 1000"},
+        {"state": "Northern Region", "city": "Mdina", "postal_code": "MDN 1010"},
+    ],
+}
+
+STREET_NAMES_BY_COUNTRY_AND_CITY = {
+    "BR": {
+        "São Paulo": ["Avenida Paulista", "Rua Augusta", "Rua Oscar Freire"],
+        "Rio de Janeiro": ["Avenida Atlântica", "Rua Visconde de Pirajá", "Avenida Rio Branco"],
+        "Brasília": ["Eixo Monumental", "Via W3 Sul", "Setor Comercial Sul"],
+        "Salvador": ["Avenida Sete de Setembro", "Rua Chile", "Avenida Tancredo Neves"],
+        "Belo Horizonte": ["Avenida Afonso Pena", "Rua da Bahia", "Avenida do Contorno"],
+        "Curitiba": ["Rua XV de Novembro", "Avenida Sete de Setembro", "Rua Marechal Deodoro"],
+        "Porto Alegre": ["Avenida Borges de Medeiros", "Rua dos Andradas", "Avenida Ipiranga"],
+        "Recife": ["Avenida Boa Viagem", "Rua do Bom Jesus", "Avenida Conde da Boa Vista"],
+        "Fortaleza": ["Avenida Beira Mar", "Rua Senador Pompeu", "Avenida Santos Dumont"],
+        "Manaus": ["Avenida Eduardo Ribeiro", "Rua Guilherme Moreira", "Avenida Djalma Batista"],
+    },
+    "CA": {
+        "Toronto": ["Yonge Street", "Queen Street West", "Bay Street"],
+        "Vancouver": ["Robson Street", "Granville Street", "West Georgia Street"],
+        "Montreal": ["Rue Sainte-Catherine", "Boulevard Saint-Laurent", "Rue Sherbrooke"],
+        "Calgary": ["Stephen Avenue", "17 Avenue SW", "Centre Street"],
+        "Ottawa": ["Wellington Street", "Bank Street", "Elgin Street"],
+        "Edmonton": ["Jasper Avenue", "Whyte Avenue", "109 Street NW"],
+        "Winnipeg": ["Portage Avenue", "Main Street", "Broadway"],
+        "Quebec City": ["Grande Allée", "Rue Saint-Jean", "Boulevard René-Lévesque"],
+        "Halifax": ["Barrington Street", "Spring Garden Road", "Argyle Street"],
+        "Victoria": ["Government Street", "Douglas Street", "Fort Street"],
+    },
+    "DE": {
+        "Berlin": ["Unter den Linden", "Friedrichstraße", "Kurfürstendamm"],
+        "Munich": ["Leopoldstraße", "Maximilianstraße", "Sonnenstraße"],
+        "Hamburg": ["Mönckebergstraße", "Reeperbahn", "Jungfernstieg"],
+        "Cologne": ["Hohe Straße", "Schildergasse", "Aachener Straße"],
+        "Frankfurt am Main": ["Zeil", "Kaiserstraße", "Berliner Straße"],
+        "Stuttgart": ["Königstraße", "Theodor-Heuss-Straße", "Rotebühlstraße"],
+        "Düsseldorf": ["Königsallee", "Schadowstraße", "Immermannstraße"],
+        "Leipzig": ["Grimmaische Straße", "Karl-Liebknecht-Straße", "Petersstraße"],
+        "Bremen": ["Obernstraße", "Am Wall", "Böttcherstraße"],
+        "Hannover": ["Georgstraße", "Lister Meile", "Karmarschstraße"],
+    },
+    "FR": {
+        "Paris": ["Rue de Rivoli", "Avenue de l'Opéra", "Boulevard Saint-Germain"],
+        "Marseille": ["La Canebière", "Rue Paradis", "Avenue du Prado"],
+        "Lyon": ["Rue de la République", "Cours Lafayette", "Avenue Jean Jaurès"],
+        "Toulouse": ["Rue d'Alsace-Lorraine", "Allées Jean Jaurès", "Rue Saint-Rome"],
+        "Nice": ["Promenade des Anglais", "Avenue Jean Médecin", "Rue Masséna"],
+        "Nantes": ["Rue Crébillon", "Cours des 50 Otages", "Boulevard Guist'hau"],
+        "Strasbourg": ["Grand'Rue", "Avenue des Vosges", "Rue des Grandes Arcades"],
+        "Bordeaux": ["Rue Sainte-Catherine", "Cours de l'Intendance", "Quai des Chartrons"],
+        "Montpellier": ["Rue de la Loge", "Boulevard du Jeu de Paume", "Avenue de Toulouse"],
+        "Lille": ["Rue Nationale", "Rue Faidherbe", "Boulevard de la Liberté"],
+    },
+    "JP": {
+        "Tokyo": ["Marunouchi", "Ginza", "Shinjuku-dori"],
+        "Osaka": ["Umeda", "Midosuji", "Dotonbori"],
+        "Kyoto": ["Kawaramachi-dori", "Shijo-dori", "Karasuma-dori"],
+        "Nagoya": ["Sakura-dori", "Hirokoji-dori", "Otsu-dori"],
+        "Fukuoka": ["Watanabe-dori", "Meiji-dori", "Tenjin"],
+        "Sapporo": ["Odori", "Ekimae-dori", "Tanukikoji"],
+        "Yokohama": ["Minato Mirai", "Bashamichi", "Motomachi"],
+        "Kobe": ["Sannomiya", "Flower Road", "Motomachi-dori"],
+        "Hiroshima": ["Aioi-dori", "Heiwa Odori", "Hondori"],
+        "Sendai": ["Aoba-dori", "Jozenji-dori", "Ichibancho"],
+    },
+    "MT": {
+        "Valletta": ["Republic Street", "Merchants Street", "St Paul Street"],
+        "Sliema": ["Tower Road", "The Strand", "Manuel Dimech Street"],
+        "St Julian's": ["Triq Santu Wistin", "George Borg Olivier Street", "Spinola Road"],
+        "Mosta": ["Constitution Street", "Main Street", "Eucharistic Congress Road"],
+        "Birkirkara": ["Valley Road", "Naxxar Road", "Mannarino Road"],
+        "Mdina": ["Villegaignon Street", "Mesquita Street", "Inguanez Street"],
+    },
+    "MX": {
+        "Cuauhtémoc": ["Paseo de la Reforma", "Avenida Juárez", "Calle Madero"],
+        "Guadalajara": ["Avenida Vallarta", "Avenida Chapultepec", "Calle Pedro Moreno"],
+        "Monterrey": ["Avenida Constitución", "Avenida Pino Suárez", "Calle Padre Mier"],
+        "Puebla": ["Avenida Juárez", "Boulevard 5 de Mayo", "Calle 16 de Septiembre"],
+        "Mérida": ["Paseo de Montejo", "Calle 60", "Avenida Colón"],
+        "Cancún": ["Avenida Tulum", "Avenida Cobá", "Boulevard Kukulcán"],
+    },
+    "US": {
+        "New York": ["Broadway", "Fifth Avenue", "Madison Avenue"],
+        "Los Angeles": ["Sunset Boulevard", "Wilshire Boulevard", "Hollywood Boulevard"],
+        "Chicago": ["Michigan Avenue", "State Street", "Wacker Drive"],
+        "Houston": ["Main Street", "Westheimer Road", "Fannin Street"],
+        "Phoenix": ["Central Avenue", "Camelback Road", "Van Buren Street"],
+        "Philadelphia": ["Market Street", "Broad Street", "Chestnut Street"],
+        "San Antonio": ["Commerce Street", "Broadway", "Alamo Plaza"],
+        "San Diego": ["Broadway", "University Avenue", "India Street"],
+        "Dallas": ["Elm Street", "Main Street", "McKinney Avenue"],
+        "Seattle": ["Pine Street", "First Avenue", "Yesler Way"],
+    },
+    "VN": {
+        "Hà Nội": ["Phố Huế", "Hàng Bài", "Tràng Tiền"],
+        "Ho Chi Minh City": ["Nguyễn Huệ", "Lê Lợi", "Đồng Khởi"],
+        "Da Nang": ["Bạch Đằng", "Nguyễn Văn Linh", "Trần Phú"],
+        "Hai Phong": ["Trần Phú", "Lạch Tray", "Điện Biên Phủ"],
+        "Can Tho": ["Đại lộ Hòa Bình", "Nguyễn Trãi", "30 Tháng 4"],
+        "Hue": ["Lê Lợi", "Trần Hưng Đạo", "Nguyễn Huệ"],
+    },
 }
 
 EU_IBAN_SPECS = {
@@ -769,7 +884,7 @@ def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
 
     return FakeAddress(
         name=generate_name(country.code)[0],
-        street=single_line(fake.street_address()),
+        street=generate_curated_street(country.code, city_details, fake),
         city=city_details["city"],
         state=city_details["state"],
         postal_code=city_details["postal_code"],
@@ -778,6 +893,38 @@ def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
         neighborhood=city_details.get("neighborhood"),
         ssn=generate_fake_ssn(fake) if country.code == "US" else None,
     )
+
+
+def generate_curated_street(
+    country_code: str, city_details: dict[str, str], fake: Faker
+) -> str:
+    street_names_by_city = STREET_NAMES_BY_COUNTRY_AND_CITY.get(country_code, {})
+    street_names = street_names_by_city.get(city_details["city"])
+
+    if not street_names:
+        return single_line(fake.street_address())
+
+    street_name = fake.random_element(street_names)
+    building_number = fake.random_int(min=1, max=250)
+
+    if country_code == "BR":
+        return f"{street_name}, {building_number}"
+
+    if country_code in {"DE", "FR", "MT"}:
+        return f"{building_number} {street_name}"
+
+    if country_code == "JP":
+        block = fake.random_int(min=1, max=9)
+        lot = fake.random_int(min=1, max=30)
+        return f"{block}-{lot} {street_name}"
+
+    if country_code == "MX":
+        return f"{street_name} {building_number}"
+
+    if country_code == "VN":
+        return f"{building_number} {street_name}"
+
+    return f"{building_number} {street_name}"
 
 
 def generate_sri_lankan_address(country: ResolvedCountry) -> FakeAddress:

@@ -8,6 +8,7 @@ from random_data_bot.country_names import (
     ADDRESS_DETAILS_BY_COUNTRY,
     EU_IBAN_SPECS,
     SRI_LANKAN_CITY_DETAILS,
+    STREET_NAMES_BY_COUNTRY_AND_CITY,
     calculate_iban_check_digits,
     format_fake_address,
     format_fake_iban,
@@ -83,9 +84,11 @@ class CountryNameTests(unittest.TestCase):
             "gb",
             "in",
             "jp",
+            "mt",
             "mx",
             "sg",
             "us",
+            "vn",
         )
 
         for country_code in curated_country_codes:
@@ -99,6 +102,22 @@ class CountryNameTests(unittest.TestCase):
                 self.assertIn(
                     (address.city, address.state, address.postal_code),
                     valid_details,
+                )
+
+    def test_priority_countries_use_city_specific_streets(self):
+        curated_country_codes = ("br", "ca", "de", "fr", "jp", "mt", "mx", "us", "vn")
+
+        for country_code in curated_country_codes:
+            street_names_by_city = STREET_NAMES_BY_COUNTRY_AND_CITY[
+                country_code.upper()
+            ]
+
+            for _ in range(100):
+                address = generate_fake_address(country_code)
+                city_street_names = street_names_by_city[address.city]
+                self.assertTrue(
+                    any(street_name in address.street for street_name in city_street_names),
+                    f"{country_code}: {address.street} did not match {address.city}",
                 )
 
     def test_mexico_address_includes_matching_neighborhood(self):
