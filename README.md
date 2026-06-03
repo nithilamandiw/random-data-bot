@@ -157,11 +157,6 @@ git clone https://github.com/nithilamandiw/random-data-bot.git
 cd random-data-bot
 ```
 
-Or download it from GitHub:
-
-```text
-Code -> Download ZIP
-```
 
 ## Setup
 
