@@ -1,1 +1,1 @@
-"""Tests for the random name bot."""
+"""Tests for the random data bot."""

@@ -22,7 +22,7 @@ from telegram.ext import (
     filters,
 )
 
-from random_name_bot.country_names import (
+from random_data_bot.country_names import (
     format_fake_address,
     format_fake_iban,
     generate_fake_address,
@@ -88,7 +88,7 @@ def load_env_file() -> None:
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     context.user_data["mode"] = MODE_ADDRESS
     await update.message.reply_text(
-        f"Welcome to Random Name Bot.\n\n{HELP_TEXT}\n\nSelected: Address",
+        f"Welcome to Random Data Bot.\n\n{HELP_TEXT}\n\nSelected: Address",
         reply_markup=MENU_KEYBOARD,
     )
 

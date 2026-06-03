@@ -195,7 +195,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token_here
 Run the bot:
 
 ```bash
-python -m random_name_bot.bot
+python -m random_data_bot.bot
 ```
 
 ## Test

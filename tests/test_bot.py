@@ -1,6 +1,6 @@
 import unittest
 
-from random_name_bot.bot import (
+from random_data_bot.bot import (
     MODE_ADDRESS,
     MODE_IBAN,
     MODE_NAME,

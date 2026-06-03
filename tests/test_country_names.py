@@ -4,7 +4,7 @@ import re
 import phonenumbers
 import pycountry
 
-from random_name_bot.country_names import (
+from random_data_bot.country_names import (
     ADDRESS_DETAILS_BY_COUNTRY,
     EU_IBAN_SPECS,
     SRI_LANKAN_CITY_DETAILS,
