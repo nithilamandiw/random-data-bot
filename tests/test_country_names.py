@@ -72,15 +72,34 @@ class CountryNameTests(unittest.TestCase):
             self.assertEqual(address.postal_code, postal_code_by_city[address.city])
 
     def test_curated_country_city_matches_postal_code(self):
-        for country_code in ("mx", "us", "gb", "de", "fr"):
-            postal_code_by_city = {
-                details["city"]: details["postal_code"]
+        curated_country_codes = (
+            "ae",
+            "au",
+            "br",
+            "ca",
+            "cn",
+            "de",
+            "fr",
+            "gb",
+            "in",
+            "jp",
+            "mx",
+            "sg",
+            "us",
+        )
+
+        for country_code in curated_country_codes:
+            valid_details = {
+                (details["city"], details["state"], details["postal_code"])
                 for details in ADDRESS_DETAILS_BY_COUNTRY[country_code.upper()]
             }
 
             for _ in range(100):
                 address = generate_fake_address(country_code)
-                self.assertEqual(address.postal_code, postal_code_by_city[address.city])
+                self.assertIn(
+                    (address.city, address.state, address.postal_code),
+                    valid_details,
+                )
 
     def test_mexico_address_includes_matching_neighborhood(self):
         details_by_neighborhood = {
