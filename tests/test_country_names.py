@@ -53,6 +53,23 @@ class CountryNameTests(unittest.TestCase):
         self.assertTrue(address.postal_code)
         self.assertTrue(address.phone)
 
+    def test_generates_address_for_requested_city(self):
+        address = generate_fake_address("mx", "Puebla")
+
+        self.assertEqual(address.country.code, "MX")
+        self.assertEqual(address.city, "Puebla")
+        self.assertEqual(address.state, "Puebla")
+        self.assertEqual(address.postal_code, "72000")
+
+    def test_requested_city_matching_ignores_accents(self):
+        address = generate_fake_address("mx", "Cuauhtemoc")
+
+        self.assertEqual(address.city, "Cuauhtémoc")
+
+    def test_rejects_unknown_requested_city(self):
+        with self.assertRaises(ValueError):
+            generate_fake_address("mx", "Atlantis")
+
     def test_formats_fake_address(self):
         address = generate_fake_address("lk")
         formatted = format_fake_address(address)

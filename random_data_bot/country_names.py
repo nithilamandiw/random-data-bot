@@ -859,6 +859,10 @@ class FakeIban:
     country: ResolvedCountry
 
 
+class AddressCityUnavailableError(ValueError):
+    """Raised when a requested city is not in the curated address dataset."""
+
+
 def normalize_country_code(raw_code: str) -> str:
     compact = raw_code.strip().lower().replace(" ", "").replace("-", "_")
     return ALIASES.get(compact, compact).upper()
@@ -900,14 +904,19 @@ def generate_sri_lankan_name() -> str:
     return f"{first} {last}"
 
 
-def generate_fake_address(raw_code: str) -> FakeAddress:
+def generate_fake_address(raw_code: str, city_name: str | None = None) -> FakeAddress:
     country = resolve_country(raw_code)
 
     if country.code == "LK":
-        return generate_sri_lankan_address(country)
+        return generate_sri_lankan_address(country, city_name)
 
     if country.code in ADDRESS_DETAILS_BY_COUNTRY:
-        return generate_curated_address(country)
+        return generate_curated_address(country, city_name)
+
+    if city_name:
+        raise AddressCityUnavailableError(
+            f"{city_name!r} is not available for {country.code}"
+        )
 
     fake = Faker(country.locale)
     return FakeAddress(
@@ -982,9 +991,13 @@ def generate_invalid_check_digits(valid_check_digits: str, fake: Faker) -> str:
             return candidate
 
 
-def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
+def generate_curated_address(
+    country: ResolvedCountry, city_name: str | None = None
+) -> FakeAddress:
     fake = Faker(country.locale)
-    city_details = fake.random_element(ADDRESS_DETAILS_BY_COUNTRY[country.code])
+    city_details = select_city_details(
+        ADDRESS_DETAILS_BY_COUNTRY[country.code], fake, city_name
+    )
     has_curated_street_name = (
         city_details["city"] in STREET_NAMES_BY_COUNTRY_AND_CITY.get(country.code, {})
     )
@@ -1001,6 +1014,28 @@ def generate_curated_address(country: ResolvedCountry) -> FakeAddress:
         ssn=generate_fake_ssn(fake) if country.code == "US" else None,
         uses_curated_street_name=has_curated_street_name,
     )
+
+
+def select_city_details(
+    city_details_list: list[dict[str, str]], fake: Faker, city_name: str | None = None
+) -> dict[str, str]:
+    if not city_name:
+        return fake.random_element(city_details_list)
+
+    requested_city = normalize_city_name(city_name)
+    for city_details in city_details_list:
+        if normalize_city_name(city_details["city"]) == requested_city:
+            return city_details
+
+    raise AddressCityUnavailableError(f"{city_name!r} is not available")
+
+
+def normalize_city_name(city_name: str) -> str:
+    without_accents = unicodedata.normalize("NFKD", city_name)
+    ascii_name = "".join(
+        character for character in without_accents if not unicodedata.combining(character)
+    )
+    return re.sub(r"\s+", " ", ascii_name).strip().casefold()
 
 
 def generate_curated_street(
@@ -1035,9 +1070,11 @@ def generate_curated_street(
     return f"{building_number} {street_name}"
 
 
-def generate_sri_lankan_address(country: ResolvedCountry) -> FakeAddress:
+def generate_sri_lankan_address(
+    country: ResolvedCountry, city_name: str | None = None
+) -> FakeAddress:
     fake = Faker()
-    city_details = fake.random_element(SRI_LANKAN_CITY_DETAILS)
+    city_details = select_city_details(SRI_LANKAN_CITY_DETAILS, fake, city_name)
     street_details = {
         "city": city_details["city"],
         "state": city_details["province"],

@@ -64,6 +64,7 @@ MODE_NAME = "name"
 MODE_IBAN = "iban"
 
 INVALID_COUNTRY_TEXT = "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr."
+INVALID_ADDRESS_TEXT = "Invalid country or city. Use a supported country code, optionally followed by a city like mx Puebla or us Chicago."
 UNSUPPORTED_IBAN_TEXT = "IBAN generation is available for EU country codes like de, fr, nl, es, or it."
 
 MENU_KEYBOARD = ReplyKeyboardMarkup(
@@ -119,7 +120,8 @@ async def fake_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         )
         return
 
-    await send_fake_address(update, context.args[0])
+    city_name = " ".join(context.args[1:]) or None
+    await send_fake_address(update, context.args[0], city_name)
 
 
 async def iban_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -136,12 +138,13 @@ async def regenerate_fake_address(update: Update, context: ContextTypes.DEFAULT_
     query = update.callback_query
     await query.answer()
 
-    country_code = query.data.removeprefix("fake:")
+    payload = query.data.removeprefix("fake:")
+    country_code, city_name = parse_address_callback_payload(payload)
 
     try:
-        message_text, keyboard = build_fake_address_response(country_code)
+        message_text, keyboard = build_fake_address_response(country_code, city_name)
     except ValueError:
-        await query.edit_message_text(INVALID_COUNTRY_TEXT)
+        await query.edit_message_text(INVALID_ADDRESS_TEXT)
         return
 
     await query.edit_message_text(
@@ -170,11 +173,13 @@ async def regenerate_fake_iban(update: Update, context: ContextTypes.DEFAULT_TYP
     )
 
 
-async def send_fake_address(update: Update, country_code: str) -> None:
+async def send_fake_address(
+    update: Update, country_code: str, city_name: str | None = None
+) -> None:
     try:
-        message_text, keyboard = build_fake_address_response(country_code)
+        message_text, keyboard = build_fake_address_response(country_code, city_name)
     except ValueError:
-        await update.message.reply_text(INVALID_COUNTRY_TEXT)
+        await update.message.reply_text(INVALID_ADDRESS_TEXT)
         return
 
     await update.message.reply_text(
@@ -210,25 +215,30 @@ async def country_code_message(update: Update, context: ContextTypes.DEFAULT_TYP
         )
         return
 
-    if len(message_text.split()) != 1:
+    parts = message_text.split()
+    if not parts:
+        return
+
+    mode = context.user_data.get("mode", MODE_ADDRESS)
+
+    if mode != MODE_ADDRESS and len(parts) != 1:
         return
 
     try:
-        country = resolve_country(message_text)
+        country = resolve_country(parts[0])
     except ValueError:
         await update.message.reply_text(
             "Send a country code like lk, us, mx, gb, de, or fr."
         )
         return
 
-    mode = context.user_data.get("mode", MODE_ADDRESS)
-
     if mode == MODE_NAME:
         await send_name(update, country.code)
     elif mode == MODE_IBAN:
         await send_fake_iban(update, country.code)
     else:
-        await send_fake_address(update, country.code)
+        city_name = " ".join(parts[1:]) or None
+        await send_fake_address(update, country.code, city_name)
 
 
 async def send_name(update: Update, country_code: str) -> None:
@@ -260,10 +270,12 @@ def parse_mode_selection(message_text: str) -> str | None:
     return None
 
 
-def build_fake_address_response(country_code: str) -> tuple[str, InlineKeyboardMarkup]:
-    fake_address = generate_fake_address(country_code)
+def build_fake_address_response(
+    country_code: str, city_name: str | None = None
+) -> tuple[str, InlineKeyboardMarkup]:
+    fake_address = generate_fake_address(country_code, city_name)
     code = normalize_country_code(country_code).lower()
-    keyboard = build_fake_address_keyboard(fake_address, code)
+    keyboard = build_fake_address_keyboard(fake_address, code, city_name)
     return format_fake_address(fake_address), keyboard
 
 
@@ -293,10 +305,21 @@ def build_fake_iban_response(country_code: str) -> tuple[str, InlineKeyboardMark
     return format_fake_iban(fake_iban), keyboard
 
 
-def build_fake_address_keyboard(fake_address, country_code: str) -> InlineKeyboardMarkup:
+def build_fake_address_keyboard(
+    fake_address, country_code: str, city_name: str | None = None
+) -> InlineKeyboardMarkup:
+    callback_data = f"fake:{country_code}"
+    if city_name:
+        callback_data = f"{callback_data}:{fake_address.city}"
+
     return InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Regenerate", callback_data=f"fake:{country_code}")]]
+        [[InlineKeyboardButton("Regenerate", callback_data=callback_data)]]
     )
+
+
+def parse_address_callback_payload(payload: str) -> tuple[str, str | None]:
+    country_code, separator, city_name = payload.partition(":")
+    return country_code, city_name if separator else None
 
 
 def copy_button(label: str, value: str) -> InlineKeyboardButton:

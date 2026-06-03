@@ -19,6 +19,7 @@ This project is intended for testing forms, demos, QA workflows, and development
 
 ```text
 /random us
+/random mx Puebla
 /name lk
 /iban de
 ```
@@ -29,10 +30,11 @@ This project is intended for testing forms, demos, QA workflows, and development
 Address | Name | IBAN
 ```
 
-After selecting a mode, send only a country code:
+After selecting a mode, send a country code. For addresses, you can also add a city:
 
 ```text
 us
+mx Puebla
 lk
 mx
 fr
@@ -57,6 +59,7 @@ Copy Random IBAN
 /start
 /help
 /random <country_code>
+/random <country_code> <city>
 /name <country_code>
 /iban <eu_country_code>
 ```
@@ -66,6 +69,8 @@ Examples:
 ```text
 /random lk
 /random mx
+/random mx Puebla
+/random us Chicago
 /random us
 /name jp
 /iban de
