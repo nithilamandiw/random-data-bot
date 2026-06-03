@@ -24,9 +24,9 @@ class BotTests(unittest.TestCase):
         message_text, keyboard = build_fake_iban_response("de")
         keyboard_data = keyboard.to_dict()
 
-        self.assertIn("Germany Fake IBAN", message_text)
-        self.assertIn("- IBAN (Fake):", message_text)
-        self.assertIn("Copy Fake IBAN", str(keyboard_data))
+        self.assertIn("Germany Random IBAN", message_text)
+        self.assertIn("- IBAN (Random):", message_text)
+        self.assertIn("Copy Random IBAN", str(keyboard_data))
         self.assertIn("Regenerate IBAN", str(keyboard_data))
 
     def test_parses_menu_modes(self):

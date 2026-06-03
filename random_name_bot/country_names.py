@@ -821,7 +821,7 @@ def format_fake_address(fake_address: FakeAddress) -> str:
 
     ssn_line = ""
     if fake_address.ssn:
-        ssn_line = f"- SSN (Fake): {monospace(fake_address.ssn)}\n"
+        ssn_line = f"- SSN (Random): {monospace(fake_address.ssn)}\n"
 
     return (
         f"{escape(country.name)} Address\n"
@@ -842,9 +842,9 @@ def format_fake_address(fake_address: FakeAddress) -> str:
 
 def format_fake_iban(fake_iban: FakeIban) -> str:
     return (
-        f"{escape(fake_iban.country.name)} Fake IBAN\n"
+        f"{escape(fake_iban.country.name)} Random IBAN\n"
         "------------------------------\n"
-        f"- IBAN (Fake): {monospace(fake_iban.iban)}\n"
+        f"- IBAN (Random): {monospace(fake_iban.iban)}\n"
         f"- Country: {monospace(fake_iban.country.name)}\n"
         "------------------------------"
     )

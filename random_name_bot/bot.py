@@ -41,8 +41,8 @@ logging.basicConfig(
 
 
 HELP_TEXT = """Use /name <country_code> to generate a random name.
-Use /fake <country_code> to generate a fake address.
-Use /iban <country_code> to generate a fake EU IBAN.
+Use /random <country_code> to generate a random address.
+Use /iban <country_code> to generate a random EU IBAN.
 Or select Address, Name, or IBAN, then send only a country code.
 
 Examples:
@@ -50,8 +50,8 @@ Examples:
 /name us
 /name gb
 /name jp
-/fake lk
-/fake gb
+/random lk
+/random gb
 /iban de
 /iban fr
 lk
@@ -128,7 +128,7 @@ async def name_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def fake_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not context.args:
         await update.message.reply_text(
-            "Please add a country code.\n\nExamples:\n/fake lk\n/fake us\n/fake gb"
+            "Please add a country code.\n\nExamples:\n/random lk\n/random us\n/random gb"
         )
         return
 
@@ -275,7 +275,7 @@ async def send_name(update: Update, country_code: str) -> None:
 
 def parse_mode_selection(message_text: str) -> str | None:
     normalized = message_text.strip().lower()
-    if normalized in {"address", "fake", "addr"}:
+    if normalized in {"address", "random", "addr"}:
         return MODE_ADDRESS
     if normalized in {"name", "names"}:
         return MODE_NAME
@@ -297,7 +297,7 @@ def build_fake_iban_response(country_code: str) -> tuple[str, InlineKeyboardMark
     code = normalize_country_code(country_code).lower()
     keyboard = InlineKeyboardMarkup(
         [
-            [copy_button("Copy Fake IBAN", fake_iban.iban)],
+            [copy_button("Copy Random IBAN", fake_iban.iban)],
             [InlineKeyboardButton("Regenerate IBAN", callback_data=f"iban:{code}")],
         ]
     )
@@ -316,7 +316,7 @@ def build_fake_address_keyboard(fake_address, country_code: str) -> InlineKeyboa
         rows.append([copy_button("Copy Neighborhood", fake_address.neighborhood)])
 
     if fake_address.ssn:
-        rows.append([copy_button("Copy Fake SSN", fake_address.ssn)])
+        rows.append([copy_button("Copy Random SSN", fake_address.ssn)])
 
     rows.extend(
         [
@@ -352,6 +352,7 @@ def main() -> None:
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("name", name_command))
+    app.add_handler(CommandHandler("random", fake_command))
     app.add_handler(CommandHandler("fake", fake_command))
     app.add_handler(CommandHandler("iban", iban_command))
     app.add_handler(CallbackQueryHandler(regenerate_fake_address, pattern=r"^fake:"))

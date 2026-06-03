@@ -172,8 +172,8 @@ class CountryNameTests(unittest.TestCase):
     def test_formats_fake_iban(self):
         formatted = format_fake_iban(generate_fake_iban("fr"))
 
-        self.assertIn("France Fake IBAN", formatted)
-        self.assertIn("- IBAN (Fake):", formatted)
+        self.assertIn("France Random IBAN", formatted)
+        self.assertIn("- IBAN (Random):", formatted)
         self.assertNotIn("intentionally invalid", formatted)
 
 
