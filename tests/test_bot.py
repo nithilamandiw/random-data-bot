@@ -11,13 +11,13 @@ from random_data_bot.bot import (
 
 
 class BotTests(unittest.TestCase):
-    def test_builds_fake_address_response_with_copy_buttons(self):
+    def test_builds_fake_address_response_with_regenerate_button_only(self):
         message_text, keyboard = build_fake_address_response("us")
         keyboard_data = keyboard.to_dict()
 
         self.assertIn("United States Address", message_text)
         self.assertIn("- Phone:", message_text)
-        self.assertIn("copy_text", str(keyboard_data))
+        self.assertNotIn("copy_text", str(keyboard_data))
         self.assertIn("Regenerate", str(keyboard_data))
 
     def test_builds_fake_iban_response_with_copy_button(self):

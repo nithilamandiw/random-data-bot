@@ -39,17 +39,14 @@ fr
 de
 ```
 
-- Copy buttons for generated fields:
+- Copy buttons for single-value outputs:
 
 ```text
 Copy Name
-Copy Street
-Copy Phone
-Copy Country
 Copy Random IBAN
 ```
 
-- Regenerate buttons for addresses and IBANs.
+- Regenerate buttons for addresses and IBANs. Address responses show only the regenerate button.
 - Monospace values for easier reading and copying.
 - Valid ISO 2-letter country codes are accepted.
 - Friendly aliases like `uk`, `usa`, and `sri_lanka` are supported.
@@ -89,8 +86,7 @@ fr = France
 ```
 
 For countries with curated data, city/state/postal-code combinations are kept together.
-Street names come from city-specific curated lists, while house/building numbers are
-random and are not delivery-verified.
+Street names come from city-specific curated lists.
 
 Currently curated address data includes:
 

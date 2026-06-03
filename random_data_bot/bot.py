@@ -63,6 +63,9 @@ MODE_ADDRESS = "address"
 MODE_NAME = "name"
 MODE_IBAN = "iban"
 
+INVALID_COUNTRY_TEXT = "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr."
+UNSUPPORTED_IBAN_TEXT = "IBAN generation is available for EU country codes like de, fr, nl, es, or it."
+
 MENU_KEYBOARD = ReplyKeyboardMarkup(
     [
         [KeyboardButton("Address"), KeyboardButton("Name"), KeyboardButton("IBAN")],
@@ -106,23 +109,7 @@ async def name_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     country_code = context.args[0]
 
-    try:
-        full_name, country = generate_name(country_code)
-    except ValueError:
-        await update.message.reply_text(
-            "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr."
-        )
-        return
-
-    fallback_note = ""
-    if country.uses_fallback:
-        fallback_note = "\n\nNo exact name style is available yet, so I used a global style."
-
-    await update.message.reply_text(
-        f"{monospace(full_name)}\n\nCountry: {escape(country.name)} ({country.code.lower()}){fallback_note}",
-        parse_mode="HTML",
-        reply_markup=InlineKeyboardMarkup([[copy_button("Copy Name", full_name)]]),
-    )
+    await send_name(update, country_code)
 
 
 async def fake_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -154,9 +141,7 @@ async def regenerate_fake_address(update: Update, context: ContextTypes.DEFAULT_
     try:
         message_text, keyboard = build_fake_address_response(country_code)
     except ValueError:
-        await query.edit_message_text(
-            "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr."
-        )
+        await query.edit_message_text(INVALID_COUNTRY_TEXT)
         return
 
     await query.edit_message_text(
@@ -175,9 +160,7 @@ async def regenerate_fake_iban(update: Update, context: ContextTypes.DEFAULT_TYP
     try:
         message_text, keyboard = build_fake_iban_response(country_code)
     except ValueError:
-        await query.edit_message_text(
-            "IBAN generation is available for EU country codes like de, fr, nl, es, or it."
-        )
+        await query.edit_message_text(UNSUPPORTED_IBAN_TEXT)
         return
 
     await query.edit_message_text(
@@ -191,9 +174,7 @@ async def send_fake_address(update: Update, country_code: str) -> None:
     try:
         message_text, keyboard = build_fake_address_response(country_code)
     except ValueError:
-        await update.message.reply_text(
-            "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr."
-        )
+        await update.message.reply_text(INVALID_COUNTRY_TEXT)
         return
 
     await update.message.reply_text(
@@ -207,9 +188,7 @@ async def send_fake_iban(update: Update, country_code: str) -> None:
     try:
         message_text, keyboard = build_fake_iban_response(country_code)
     except ValueError:
-        await update.message.reply_text(
-            "IBAN generation is available for EU country codes like de, fr, nl, es, or it."
-        )
+        await update.message.reply_text(UNSUPPORTED_IBAN_TEXT)
         return
 
     await update.message.reply_text(
@@ -254,22 +233,18 @@ async def country_code_message(update: Update, context: ContextTypes.DEFAULT_TYP
 
 async def send_name(update: Update, country_code: str) -> None:
     try:
-        full_name, country = generate_name(country_code)
+        message_text, keyboard = build_name_response(country_code)
     except ValueError:
         await update.message.reply_text(
-            "Invalid country code. Use a real 2-letter code like lk, us, gb, jp, or fr.",
+            INVALID_COUNTRY_TEXT,
             reply_markup=MENU_KEYBOARD,
         )
         return
 
-    fallback_note = ""
-    if country.uses_fallback:
-        fallback_note = "\n\nNo exact name style is available yet, so I used a global style."
-
     await update.message.reply_text(
-        f"{monospace(full_name)}\n\nCountry: {escape(country.name)} ({country.code.lower()}){fallback_note}",
+        message_text,
         parse_mode="HTML",
-        reply_markup=InlineKeyboardMarkup([[copy_button("Copy Name", full_name)]]),
+        reply_markup=keyboard,
     )
 
 
@@ -292,6 +267,20 @@ def build_fake_address_response(country_code: str) -> tuple[str, InlineKeyboardM
     return format_fake_address(fake_address), keyboard
 
 
+def build_name_response(country_code: str) -> tuple[str, InlineKeyboardMarkup]:
+    full_name, country = generate_name(country_code)
+    fallback_note = ""
+    if country.uses_fallback:
+        fallback_note = "\n\nNo exact name style is available yet, so I used a global style."
+
+    message_text = (
+        f"{monospace(full_name)}\n\n"
+        f"Country: {escape(country.name)} ({country.code.lower()}){fallback_note}"
+    )
+    keyboard = InlineKeyboardMarkup([[copy_button("Copy Name", full_name)]])
+    return message_text, keyboard
+
+
 def build_fake_iban_response(country_code: str) -> tuple[str, InlineKeyboardMarkup]:
     fake_iban = generate_fake_iban(country_code)
     code = normalize_country_code(country_code).lower()
@@ -305,37 +294,9 @@ def build_fake_iban_response(country_code: str) -> tuple[str, InlineKeyboardMark
 
 
 def build_fake_address_keyboard(fake_address, country_code: str) -> InlineKeyboardMarkup:
-    rows = [
-        [
-            copy_button("Copy Name", fake_address.name),
-            copy_button("Copy Street", fake_address.street),
-        ],
-    ]
-
-    if fake_address.neighborhood:
-        rows.append([copy_button("Copy Neighborhood", fake_address.neighborhood)])
-
-    if fake_address.ssn:
-        rows.append([copy_button("Copy Random SSN", fake_address.ssn)])
-
-    rows.extend(
-        [
-            [
-                copy_button("Copy City", fake_address.city),
-                copy_button("Copy State", fake_address.state),
-            ],
-            [
-                copy_button("Copy Postal Code", fake_address.postal_code),
-                copy_button("Copy Phone", fake_address.phone),
-            ],
-            [
-                copy_button("Copy Country", fake_address.country.name),
-            ],
-            [InlineKeyboardButton("Regenerate", callback_data=f"fake:{country_code}")],
-        ]
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("Regenerate", callback_data=f"fake:{country_code}")]]
     )
-
-    return InlineKeyboardMarkup(rows)
 
 
 def copy_button(label: str, value: str) -> InlineKeyboardButton:

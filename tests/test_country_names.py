@@ -62,7 +62,6 @@ class CountryNameTests(unittest.TestCase):
         self.assertIn("- Street:", formatted)
         self.assertIn("- Postal Code:", formatted)
         self.assertIn("- Phone:", formatted)
-        self.assertIn("house number is random", formatted)
 
     def test_sri_lankan_city_matches_postal_code(self):
         postal_code_by_city = {

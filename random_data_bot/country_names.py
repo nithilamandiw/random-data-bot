@@ -1156,8 +1156,6 @@ def format_fake_address(fake_address: FakeAddress) -> str:
     fallback_note = ""
     if country.uses_fallback:
         fallback_note = "\n\nNote: Exact local address style is unavailable, so this uses a global style."
-    elif fake_address.uses_curated_street_name:
-        fallback_note = "\n\nNote: Street name is curated; house number is random and not delivery-verified."
 
     neighborhood_line = ""
     if fake_address.neighborhood:
