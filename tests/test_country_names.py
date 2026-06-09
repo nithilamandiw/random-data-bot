@@ -7,6 +7,9 @@ import pycountry
 from random_data_bot.country_names import (
     ADDRESS_DETAILS_BY_COUNTRY,
     EU_IBAN_SPECS,
+    RECENT_NAMES_BY_COUNTRY,
+    SRI_LANKAN_FIRST_NAMES,
+    SRI_LANKAN_LAST_NAMES,
     SRI_LANKAN_CITY_DETAILS,
     STREET_NAMES_BY_COUNTRY_AND_CITY,
     calculate_iban_check_digits,
@@ -42,6 +45,17 @@ class CountryNameTests(unittest.TestCase):
 
         self.assertEqual(country.code, "LK")
         self.assertIn(" ", name)
+
+    def test_sri_lankan_name_pool_has_variety(self):
+        self.assertGreaterEqual(len(SRI_LANKAN_FIRST_NAMES), 50)
+        self.assertGreaterEqual(len(SRI_LANKAN_LAST_NAMES), 30)
+
+    def test_generated_names_avoid_recent_repeats(self):
+        RECENT_NAMES_BY_COUNTRY.clear()
+
+        names = [generate_name("lk")[0] for _ in range(20)]
+
+        self.assertEqual(len(names), len(set(names)))
 
     def test_generates_fake_address(self):
         address = generate_fake_address("gb")

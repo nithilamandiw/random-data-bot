@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
 from html import escape
 import re
@@ -13,6 +15,9 @@ import pycountry
 
 
 DEFAULT_LOCALE = "en_US"
+RECENT_NAME_LIMIT = 25
+NAME_GENERATION_ATTEMPTS = 50
+RECENT_NAMES_BY_COUNTRY: dict[str, deque[str]] = {}
 
 ALIASES = {
     "uk": "gb",
@@ -333,31 +338,100 @@ CALLING_CODE_BY_COUNTRY = {
 # Sri Lankan names are more recognizable with a small local curated list than
 # with Faker's English/Indian fallback.
 SRI_LANKAN_FIRST_NAMES = [
-    "Kasun",
-    "Nimal",
+    "Aadhil",
+    "Aarav",
+    "Akeel",
+    "Akila",
     "Amal",
+    "Anjali",
+    "Anjana",
+    "Anuki",
+    "Aravinda",
+    "Ashan",
+    "Binuri",
+    "Buddhika",
     "Chamath",
-    "Isuru",
+    "Chamika",
+    "Charith",
+    "Dasun",
+    "Dewmi",
     "Dilan",
-    "Tharushi",
-    "Nethmi",
     "Dilini",
-    "Sachini",
-    "Kavindi",
+    "Dineth",
+    "Dulani",
+    "Dulanjana",
+    "Gayani",
     "Hiruni",
+    "Imasha",
+    "Inoka",
+    "Isuru",
+    "Janith",
+    "Kanchana",
+    "Kasun",
+    "Kavindi",
+    "Kavindu",
+    "Lahiru",
+    "Lakmal",
+    "Lakmini",
+    "Madushani",
+    "Malith",
+    "Maneesha",
+    "Nadun",
+    "Nethmi",
+    "Nimal",
+    "Nipuni",
+    "Oshada",
+    "Pasan",
+    "Piumi",
+    "Pramod",
+    "Ravindu",
+    "Sachini",
+    "Sahan",
+    "Sandali",
+    "Shanika",
+    "Shehan",
+    "Supun",
+    "Tharindu",
+    "Tharushi",
+    "Udara",
+    "Yasiru",
 ]
 
 SRI_LANKAN_LAST_NAMES = [
-    "Perera",
-    "Fernando",
-    "Silva",
-    "Jayasinghe",
-    "Wijesinghe",
+    "Abeysinghe",
+    "Amarasinghe",
+    "Ariyawansa",
+    "Athukorala",
     "Bandara",
-    "Gunasekara",
-    "Karunaratne",
+    "Dias",
     "Dissanayake",
+    "Ekanayake",
+    "Fernando",
+    "Fonseka",
+    "Gamage",
+    "Gunasekara",
+    "Herath",
+    "Jayakody",
+    "Jayalath",
+    "Jayasinghe",
+    "Karunaratne",
+    "Kodithuwakku",
+    "Kularatne",
+    "Kumara",
+    "Liyanage",
+    "Mendis",
+    "Nanayakkara",
+    "Pathirana",
+    "Perera",
     "Rajapaksha",
+    "Ranasinghe",
+    "Ratnayake",
+    "Samarasinghe",
+    "Senanayake",
+    "Silva",
+    "Vithanage",
+    "Weerasinghe",
+    "Wijesinghe",
 ]
 
 SRI_LANKAN_CITY_DETAILS = [
@@ -891,10 +965,10 @@ def generate_name(raw_code: str) -> tuple[str, ResolvedCountry]:
     country = resolve_country(raw_code)
 
     if country.code == "LK":
-        return generate_sri_lankan_name(), country
+        return generate_distinct_name(country.code, generate_sri_lankan_name), country
 
     fake = Faker(country.locale)
-    return fake.name(), country
+    return generate_distinct_name(country.code, fake.name), country
 
 
 def generate_sri_lankan_name() -> str:
@@ -902,6 +976,22 @@ def generate_sri_lankan_name() -> str:
     first = fake.random_element(SRI_LANKAN_FIRST_NAMES)
     last = fake.random_element(SRI_LANKAN_LAST_NAMES)
     return f"{first} {last}"
+
+
+def generate_distinct_name(country_code: str, generator: Callable[[], str]) -> str:
+    recent_names = RECENT_NAMES_BY_COUNTRY.setdefault(
+        country_code, deque(maxlen=RECENT_NAME_LIMIT)
+    )
+
+    for _ in range(NAME_GENERATION_ATTEMPTS):
+        candidate = generator()
+        if candidate not in recent_names:
+            recent_names.append(candidate)
+            return candidate
+
+    candidate = generator()
+    recent_names.append(candidate)
+    return candidate
 
 
 def generate_fake_address(raw_code: str, city_name: str | None = None) -> FakeAddress:
